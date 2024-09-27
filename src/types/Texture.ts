@@ -5,5 +5,6 @@ export interface Texture {
   type: string;
   lastModified: number;
 
-  object: HTMLImageElement;
+  original: Blob;
+  scaled: Blob;
 }

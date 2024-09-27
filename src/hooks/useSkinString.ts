@@ -3,11 +3,14 @@ import { Suit } from "types/Suit";
 import { Texture } from "types/Texture";
 
 export const useSkinString = () => {
-  const [name, setName] = useState<string>();
-  const [texture, setTexture] = useState<string>();
-  const [highContrastTexture, setHighContrastTexture] = useState<string>();
+  const [name, setName] = useState<string>("");
+
+  const [texture, setTexture] = useState<Texture>();
+  const [highContrastTexture, setHighContrastTexture] = useState<Texture>();
+
   const [suit, setSuit] = useState<Suit | "all">("all");
-  const [skinString, setSkinString] = useState<string[]>([]);
+
+  const [skinString, setSkinString] = useState<string>();
 
   const generateSkinString = ({
     name,
@@ -19,7 +22,7 @@ export const useSkinString = () => {
     suit?: string;
     texture?: string;
     highContrastTexture?: string;
-  }): string[] => {
+  }): string => {
     const props = [
       name ? `name = "${name}",` : "",
       `suit = "${suit === "all" ? "*" : suit}",`,
@@ -37,34 +40,30 @@ export const useSkinString = () => {
       "return skin",
     ].filter(Boolean);
 
-    return skinString;
-  };
-
-  const onTexture = (image: Texture) => {
-    setTexture(image.name);
-  };
-
-  const onHighContrastTexture = (image: Texture) => {
-    setHighContrastTexture(image.name);
+    return skinString.join("\n");
   };
 
   useEffect(() => {
     setSkinString(
-      generateSkinString({ name, suit, texture, highContrastTexture }),
+      generateSkinString({
+        name,
+        suit,
+        texture: texture?.name,
+        highContrastTexture: highContrastTexture?.name,
+      }),
     );
   }, [name, suit, texture, highContrastTexture]);
 
   return {
     name,
-    suit,
-    texture,
-    highContrastTexture,
-    skinString,
-
     setName,
+    suit,
     setSuit,
+    texture,
+    setTexture,
+    highContrastTexture,
+    setHighContrastTexture,
 
-    onTexture,
-    onHighContrastTexture,
+    skinString,
   };
 };

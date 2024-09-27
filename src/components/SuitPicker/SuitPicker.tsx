@@ -19,21 +19,23 @@ export const SuitPicker: FC<{
   }, [selected]);
 
   return (
-    <div className="flex flex-row space-x-4 mb-4">
-      {suits.map((suit) => (
-        <SuitButton
-          key={suit}
-          suit={suit}
-          onClick={() => setSelected(suit)}
-          initialState={!selected}
-          active={selected === suit || selected === "all"}
-        />
-      ))}
+    <div className="flex flex-row justify-between mb-4 w-full">
+      <section className="flex flex-row flex-1 justify-between">
+        {suits.map((suit) => (
+          <SuitButton
+            key={suit}
+            suit={suit}
+            onClick={() => setSelected(suit)}
+            initialState={!selected}
+            active={selected === suit || selected === "all"}
+          />
+        ))}
+      </section>
 
       <div className="divider divider-horizontal" />
 
       <button
-        className="py-4 h-auto text-1xl btn"
+        className="px-6 py-4 h-auto text-1xl btn"
         onClick={() => setSelected("all")}
       >
         All

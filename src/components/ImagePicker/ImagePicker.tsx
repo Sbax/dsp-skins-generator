@@ -1,5 +1,6 @@
 import { ChangeEvent, DragEvent, FC, ReactNode, useState } from "react";
 import { Texture } from "types/Texture";
+import { createImageBlob } from "utils/createImageBlob";
 
 interface ImagePickerProps {
   onImageLoad?: (image: Texture) => void;
@@ -34,7 +35,7 @@ const DropArea: FC<{
   children?: ReactNode;
 }> = ({ dragging, handleDrop, handleDragOver, handleDragLeave, children }) => (
   <div
-    className={`form-control w-full max-w-xs border-dashed border-2 ${dragging ? "border-primary bg-primary bg-opacity-10" : "border-gray-400"} p-4 rounded-md`}
+    className={`form-control w-full border-dashed border-2 ${dragging ? "border-primary bg-primary bg-opacity-10" : "border-gray-400"} p-4 rounded-md`}
     onDrop={handleDrop}
     onDragOver={handleDragOver}
     onDragLeave={handleDragLeave}
@@ -55,21 +56,42 @@ export const ImagePicker: FC<ImagePickerProps> = ({
   const processFile = (file: File) => {
     const imageUrl = URL.createObjectURL(file);
 
-    const imageObject = new Image();
-    imageObject.src = imageUrl;
+    const imgElement = new Image();
+    imgElement.src = imageUrl;
 
-    const image = {
-      src: imageUrl,
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      lastModified: file.lastModified,
+    imgElement.onload = async () => {
+      try {
+        const originalBlob = await createImageBlob(
+          imgElement,
+          imgElement.width,
+          imgElement.height,
+        );
 
-      object: imageObject,
+        const scaledBlob = await createImageBlob(
+          imgElement,
+          imgElement.width / 2,
+          imgElement.height / 2,
+        );
+
+        const image = {
+          src: imageUrl,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified,
+
+          original: originalBlob,
+          scaled: scaledBlob,
+        };
+
+        setImage(image);
+        onImageLoad(image);
+      } catch (error) {
+        console.error("Error processing image:", error);
+      }
     };
 
-    setImage(image);
-    onImageLoad(image);
+    imgElement.onerror = (err) => console.error("Failed to load image:", err);
   };
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
