@@ -64,8 +64,8 @@ export const ImagePicker: FC<ImagePickerProps> = ({
       size: file.size,
       type: file.type,
       lastModified: file.lastModified,
-      width: imageObject.naturalWidth,
-      height: imageObject.naturalHeight,
+
+      object: imageObject,
     };
 
     setImage(image);

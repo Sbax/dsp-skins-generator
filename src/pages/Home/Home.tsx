@@ -1,30 +1,19 @@
 import { ImagePicker } from "components/ImagePicker";
 import { SuitPicker } from "components/SuitPicker";
-import { useEffect, useState } from "react";
-import { Suit } from "types/Suit";
-import { Texture } from "types/Texture";
-import { generateSkinString } from "utils/generateSkinString";
+import { useSkinString } from "hooks/useSkinString";
 
 function Home() {
-  const [name, setName] = useState<string>();
-  const [texture, setTexture] = useState<string>();
-  const [highContrastTexture, setHighContrastTexture] = useState<string>();
-  const [suit, setSuit] = useState<Suit | "all">("all");
-  const [skinString, setSkinString] = useState(generateSkinString({}));
+  const {
+    name,
+    suit,
+    skinString,
 
-  const onTexture = (image: Texture) => {
-    setTexture(image.name);
-  };
+    setName,
+    setSuit,
 
-  const onHighContrastTexture = (image: Texture) => {
-    setHighContrastTexture(image.name);
-  };
-
-  useEffect(() => {
-    setSkinString(
-      generateSkinString({ name, suit, texture, highContrastTexture }),
-    );
-  }, [name, suit, texture, highContrastTexture]);
+    onTexture,
+    onHighContrastTexture,
+  } = useSkinString();
 
   return (
     <section className="gap-4 grid grid-cols-2 p-4">
