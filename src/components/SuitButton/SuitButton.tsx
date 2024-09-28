@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, FC } from "react";
-import { Suit } from "types/Suit";
+import { Suit, SuitSymbols } from "types/Suit";
 
 type SuitButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -26,10 +26,7 @@ export const SuitButton: FC<SuitButtonProps> = ({
         initialState || active ? "opacity-100" : "opacity-40 hover:opacity-100",
       ].join(" ")}
     >
-      {suit === "hearts" && "♥"}
-      {suit === "clubs" && "♣"}
-      {suit === "diamonds" && "♦"}
-      {suit === "spades" && "♠"}
+      {SuitSymbols[suit]}
     </button>
   );
 };

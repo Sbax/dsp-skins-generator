@@ -1,4 +1,5 @@
 import { ImagePicker } from "components/ImagePicker";
+import { NamePicker } from "components/NamePicker";
 import { SuitPicker } from "components/SuitPicker";
 import { useSkinString } from "hooks/useSkinString";
 import { useMemo } from "react";
@@ -19,6 +20,9 @@ function Home() {
 
     setTexture,
     setHighContrastTexture,
+
+    suitNames,
+    setSuitNames,
   } = useSkinString();
 
   const downloadEnabled = useMemo(() => {
@@ -59,7 +63,7 @@ function Home() {
         Skins Generator
       </h1>
 
-      <section className="gap-8 grid grid-cols-4">
+      <section className="gap-8 grid grid-cols-2 max-w-screen-lg">
         <section className="space-y-4">
           <section className="space-y-2">
             <h3 className="font-bold text-xl">Choose a suit</h3>
@@ -68,7 +72,8 @@ function Home() {
 
           <section className="space-y-2">
             <h3 className="font-bold text-xl">Choose a name for your skin</h3>
-            <div className="form-control">
+
+            <div className="flex-1 form-control w-full">
               <input
                 type="text"
                 placeholder="Enter name"
@@ -77,6 +82,12 @@ function Home() {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
+
+            <NamePicker
+              enabled={suit === "all" && Boolean(name)}
+              suitNames={suitNames}
+              setSuitNames={setSuitNames}
+            />
           </section>
 
           <section className="space-y-2">

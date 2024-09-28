@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Suit } from "types/Suit";
+import { Suit, suits } from "types/Suit";
+import { SuitNames } from "types/SuitNames";
 import { Texture } from "types/Texture";
 
 export const useSkinString = () => {
@@ -12,19 +13,49 @@ export const useSkinString = () => {
 
   const [skinString, setSkinString] = useState<string>();
 
+  const [suitNames, setSuitNames] = useState<SuitNames>();
+
+  const getName = ({
+    name,
+    suitNames,
+  }: {
+    name?: string;
+    suitNames?: SuitNames;
+  }) => {
+    if (!name) return [];
+    if (!suitNames) return [name ? `name = "${name}",` : ""];
+
+    const suitNamesStrings = suits
+      .map((suit) => {
+        const suitName = suitNames[suit];
+        if (!suitName) return;
+
+        return `${suit} = '${suitName}',`;
+      })
+      .filter(Boolean);
+
+    return [
+      "name = {",
+      ...suitNamesStrings.map((string) => `    ${string}`),
+      "},",
+    ];
+  };
+
   const generateSkinString = ({
     name,
     suit,
     texture,
     highContrastTexture,
+    suitNames,
   }: {
     name?: string;
     suit?: string;
     texture?: string;
     highContrastTexture?: string;
+    suitNames?: SuitNames;
   }): string => {
     const props = [
-      name ? `name = "${name}",` : "",
+      ...getName({ name, suitNames }),
       `suit = "${suit === "all" ? "*" : suit}",`,
       texture ? `texture = "${texture}",` : "",
       highContrastTexture
@@ -50,9 +81,10 @@ export const useSkinString = () => {
         suit,
         texture: texture?.name,
         highContrastTexture: highContrastTexture?.name,
+        suitNames,
       }),
     );
-  }, [name, suit, texture, highContrastTexture]);
+  }, [name, suit, texture, highContrastTexture, suitNames]);
 
   return {
     name,
@@ -63,6 +95,8 @@ export const useSkinString = () => {
     setTexture,
     highContrastTexture,
     setHighContrastTexture,
+    suitNames,
+    setSuitNames,
 
     skinString,
   };

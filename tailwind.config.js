@@ -10,6 +10,8 @@ const colors = {
 const safelist = Object.keys(colors).flatMap((color) => [
   `bg-${color}`,
   `bg-${color}/50`,
+  `border-${color}`,
+  `outline-${color}`,
   `text-${color}`,
 ]);
 
