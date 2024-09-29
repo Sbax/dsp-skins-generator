@@ -20,14 +20,14 @@ module.exports = {
     themes: [
       {
         garden: {
-          primary: "#6d0b74",
-          "primary-focus": "#410745",
+          primary: "#f8860d",
+          "primary-focus": "#cb6c06",
           "primary-content": "#ffffff",
           secondary: "#007ebd",
           "secondary-focus": "#005c8a",
           "secondary-content": "#ffffff",
-          accent: "#f8860d",
-          "accent-focus": "#cb6c06",
+          accent: "#8B1E3F",
+          "accent-focus": "#61152c",
           "accent-content": "#ffffff",
           neutral: "#5c5757",
           "neutral-focus": "#272525",

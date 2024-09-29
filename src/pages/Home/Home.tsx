@@ -59,7 +59,7 @@ function Home() {
   };
 
   return (
-    <main className="p-4">
+    <>
       <h1 className="mb-4 font-bold text-3xl">
         <a className="link" href="https://github.com/Kekulism/DeckSkinsPlus">
           DeckSkinsPlus
@@ -70,14 +70,9 @@ function Home() {
       <section className="gap-8 grid grid-cols-2 max-w-screen-lg">
         <section className="space-y-4">
           <section className="space-y-2">
-            <h3 className="font-bold text-xl">Choose a suit</h3>
-            <SuitPicker selected={suit} setSelected={setSuit} />
-          </section>
-
-          <section className="space-y-2">
             <h3 className="font-bold text-xl">Choose a name for your skin</h3>
 
-            <div className="flex-1 form-control w-full">
+            <section className="flex-1 form-control w-full">
               <input
                 type="text"
                 placeholder="Enter name"
@@ -85,7 +80,14 @@ function Home() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
+            </section>
+          </section>
+
+          <section className="space-y-4">
+            <section className="space-y-2">
+              <h3 className="font-bold text-xl">Choose a suit</h3>
+              <SuitPicker selected={suit} setSelected={setSuit} />
+            </section>
 
             <SkinNameForSuitPicker
               enabled={suit === "all" && Boolean(name)}
@@ -94,7 +96,8 @@ function Home() {
             />
           </section>
 
-          <section>
+          <section className="space-y-2">
+            <h3 className="font-bold text-xl">Choose cards</h3>
             <CardsPicker selected={cards} setSelected={setCards} />
           </section>
 
@@ -104,12 +107,12 @@ function Home() {
           </section>
 
           <section className="space-y-2">
-            <div className="flex items-baseline space-x-2">
+            <section className="flex items-baseline space-x-2">
               <h3 className="font-bold text-xl">High contrast texture </h3>
               <span className="font-bold text-neutral-500 text-xs">
                 (optional)
               </span>
-            </div>
+            </section>
             <TexturePicker onLoad={setHighContrastTexture} />
           </section>
         </section>
@@ -122,16 +125,59 @@ function Home() {
             Download .zip
           </button>
 
-          <div className="bg-opacity-20 mockup-code text-neutral">
+          <section className="bg-opacity-20 mockup-code text-neutral">
             {skinString?.split("\n").map((line, i) => (
               <code key={i}>
                 <pre>{line}</pre>
               </code>
             ))}
-          </div>
+          </section>
+
+          <section className="prose">
+            <h1>What is this?</h1>
+            <p>
+              This is a skin generator for{" "}
+              <a
+                className="link"
+                href="https://github.com/Kekulism/DeckSkinsPlus"
+              >
+                DeckSkinsPlus
+              </a>
+              , a mod for <a href="https://www.playbalatro.com/">Balatro</a>.
+              Install{" "}
+              <a
+                className="link"
+                href="https://github.com/ethangreen-dev/lovely-injector"
+              >
+                Lovely
+              </a>{" "}
+              and{" "}
+              <a
+                className="link"
+                href="https://github.com/Steamopollys/Steamodded"
+              >
+                Steamodded
+              </a>
+              . Guide available{" "}
+              <a href="https://discord.com/invite/5mH3dNhjx2">here</a>.
+            </p>
+            <h1>How does this work?</h1>
+            <p>
+              Pick a suit name, choose suits and cards to skin, add textures,
+              then download and extract the generated <code>.zip</code> in your{" "}
+              <code>DeckSkinsPlus</code> folder.
+            </p>
+
+            <section className="space-x-2">
+              <span>Still confused?</span>
+              <a className="btn btn-primary" href="/about">
+                Read more
+              </a>
+            </section>
+          </section>
         </section>
       </section>
-    </main>
+    </>
   );
 }
 

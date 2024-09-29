@@ -4,14 +4,21 @@ import ReactDOM from "react-dom/client";
 import Home from "pages/Home";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { Route } from "wouter";
+import Description from "pages/Description";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
-    <main>
-      <Home />
+    <main className="p-4">
+      <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/about">
+        <Description />
+      </Route>
     </main>
   </React.StrictMode>,
 );
