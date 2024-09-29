@@ -1,22 +1,22 @@
 import { FC, useState } from "react";
 import { Suit, SuitSymbols, suits } from "types/Suit";
-import { SuitNames } from "types/SuitNames";
+import { SkinNameForSuit } from "types/SkinNameForSuit";
 
-interface NamePickerProps {
+interface SkinNameForSuitPickerProps {
   enabled: boolean;
-  suitNames?: SuitNames;
-  setSuitNames: (suitNames: SuitNames) => unknown;
+  selected?: SkinNameForSuit;
+  setSelected: (skinNameForSuit: SkinNameForSuit) => unknown;
 }
 
-export const NamePicker: FC<NamePickerProps> = ({
+export const SkinNameForSuitPicker: FC<SkinNameForSuitPickerProps> = ({
   enabled,
-  suitNames,
-  setSuitNames,
+  selected,
+  setSelected,
 }) => {
-  const [separateName, setSeparateName] = useState(Boolean(suitNames));
+  const [separateName, setSeparateName] = useState(Boolean(selected));
 
-  const updateSuitNames = ({ suit, name }: { suit: Suit; name: string }) =>
-    setSuitNames({ ...suitNames, [suit]: name });
+  const updateSelected = ({ suit, name }: { suit: Suit; name: string }) =>
+    setSelected({ ...selected, [suit]: name });
 
   return (
     <section className="flex flex-col space-y-4 w-full">
@@ -53,9 +53,9 @@ export const NamePicker: FC<NamePickerProps> = ({
                 type="text"
                 className="grow"
                 placeholder={`Name for ${suit} suit`}
-                value={suitNames && suitNames[suit] ? suitNames[suit] : ""}
+                value={selected && selected[suit] ? selected[suit] : ""}
                 onChange={(event) =>
-                  updateSuitNames({ suit, name: event.target.value })
+                  updateSelected({ suit, name: event.target.value })
                 }
                 disabled={!enabled}
               />

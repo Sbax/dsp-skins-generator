@@ -1,6 +1,7 @@
-import { ImagePicker } from "components/ImagePicker";
-import { NamePicker } from "components/NamePicker";
+import { CardsPicker } from "components/CardsPicker";
+import { SkinNameForSuitPicker } from "components/SkinNameForSuitPicker";
 import { SuitPicker } from "components/SuitPicker";
+import { TexturePicker } from "components/TexturePicker";
 import { useSkinString } from "hooks/useSkinString";
 import { useMemo } from "react";
 import { Texture } from "types/Texture";
@@ -21,8 +22,11 @@ function Home() {
     setTexture,
     setHighContrastTexture,
 
-    suitNames,
-    setSuitNames,
+    skinNameForSuit,
+    setSkinNameForSuit,
+
+    cards,
+    setCards,
   } = useSkinString();
 
   const downloadEnabled = useMemo(() => {
@@ -67,7 +71,7 @@ function Home() {
         <section className="space-y-4">
           <section className="space-y-2">
             <h3 className="font-bold text-xl">Choose a suit</h3>
-            <SuitPicker selectedSuit={suit} setSuit={setSuit} />
+            <SuitPicker selected={suit} setSelected={setSuit} />
           </section>
 
           <section className="space-y-2">
@@ -83,16 +87,20 @@ function Home() {
               />
             </div>
 
-            <NamePicker
+            <SkinNameForSuitPicker
               enabled={suit === "all" && Boolean(name)}
-              suitNames={suitNames}
-              setSuitNames={setSuitNames}
+              selected={skinNameForSuit}
+              setSelected={setSkinNameForSuit}
             />
+          </section>
+
+          <section>
+            <CardsPicker selected={cards} setSelected={setCards} />
           </section>
 
           <section className="space-y-2">
             <h3 className="font-bold text-xl">Texture</h3>
-            <ImagePicker onImageLoad={setTexture} />
+            <TexturePicker onLoad={setTexture} />
           </section>
 
           <section className="space-y-2">
@@ -102,7 +110,7 @@ function Home() {
                 (optional)
               </span>
             </div>
-            <ImagePicker onImageLoad={setHighContrastTexture} />
+            <TexturePicker onLoad={setHighContrastTexture} />
           </section>
         </section>
 

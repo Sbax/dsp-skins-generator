@@ -2,8 +2,8 @@ import { ChangeEvent, DragEvent, FC, ReactNode, useState } from "react";
 import { Texture } from "types/Texture";
 import { createImageBlob } from "utils/createImageBlob";
 
-interface ImagePickerProps {
-  onImageLoad?: (image: Texture) => void;
+interface TexturePickerProps {
+  onLoad?: (image: Texture) => void;
 }
 
 const FileInput: FC<{
@@ -47,8 +47,8 @@ const DropArea: FC<{
   </div>
 );
 
-export const ImagePicker: FC<ImagePickerProps> = ({
-  onImageLoad = () => {},
+export const TexturePicker: FC<TexturePickerProps> = ({
+  onLoad = () => {},
 }) => {
   const [image, setImage] = useState<Texture | null>(null);
   const [dragging, setDragging] = useState<boolean>(false);
@@ -85,7 +85,7 @@ export const ImagePicker: FC<ImagePickerProps> = ({
         };
 
         setImage(image);
-        onImageLoad(image);
+        onLoad(image);
       } catch (error) {
         console.error("Error processing image:", error);
       }

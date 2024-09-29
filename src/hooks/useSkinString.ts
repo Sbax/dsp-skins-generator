@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CardValue } from "types/CardValue";
+import { SkinNameForSuit } from "types/SkinNameForSuit";
 import { Suit, suits } from "types/Suit";
-import { SuitNames } from "types/SuitNames";
 import { Texture } from "types/Texture";
 
 export const useSkinString = () => {
@@ -13,21 +14,23 @@ export const useSkinString = () => {
 
   const [skinString, setSkinString] = useState<string>();
 
-  const [suitNames, setSuitNames] = useState<SuitNames>();
+  const [skinNameForSuit, setSkinNameForSuit] = useState<SkinNameForSuit>();
+
+  const [cards, setCards] = useState<CardValue[] | null | undefined>();
 
   const getName = ({
     name,
-    suitNames,
+    skinNameForSuit,
   }: {
     name?: string;
-    suitNames?: SuitNames;
+    skinNameForSuit?: SkinNameForSuit;
   }) => {
     if (!name) return [];
-    if (!suitNames) return [name ? `name = "${name}",` : ""];
+    if (!skinNameForSuit) return [name ? `name = "${name}",` : ""];
 
-    const suitNamesStrings = suits
+    const skinNameForSuitStrings = suits
       .map((suit) => {
-        const suitName = suitNames[suit];
+        const suitName = skinNameForSuit[suit];
         if (!suitName) return;
 
         return `${suit} = '${suitName}',`;
@@ -36,7 +39,7 @@ export const useSkinString = () => {
 
     return [
       "name = {",
-      ...suitNamesStrings.map((string) => `    ${string}`),
+      ...skinNameForSuitStrings.map((string) => `    ${string}`),
       "},",
     ];
   };
@@ -46,18 +49,21 @@ export const useSkinString = () => {
     suit,
     texture,
     highContrastTexture,
-    suitNames,
+    cards,
+    skinNameForSuit,
   }: {
     name?: string;
     suit?: string;
     texture?: string;
     highContrastTexture?: string;
-    suitNames?: SuitNames;
+    cards: CardValue[] | null | undefined;
+    skinNameForSuit?: SkinNameForSuit;
   }): string => {
     const props = [
-      ...getName({ name, suitNames }),
+      ...getName({ name, skinNameForSuit }),
       `suit = "${suit === "all" ? "*" : suit}",`,
       texture ? `texture = "${texture}",` : "",
+      cards ? `cards = {${cards.map((card) => `"${card}"`).join(", ")}},` : "",
       highContrastTexture
         ? `highContrastTexture = "${highContrastTexture}",`
         : "",
@@ -81,10 +87,11 @@ export const useSkinString = () => {
         suit,
         texture: texture?.name,
         highContrastTexture: highContrastTexture?.name,
-        suitNames,
+        cards,
+        skinNameForSuit,
       }),
     );
-  }, [name, suit, texture, highContrastTexture, suitNames]);
+  }, [name, suit, texture, highContrastTexture, cards, skinNameForSuit]);
 
   return {
     name,
@@ -95,8 +102,10 @@ export const useSkinString = () => {
     setTexture,
     highContrastTexture,
     setHighContrastTexture,
-    suitNames,
-    setSuitNames,
+    skinNameForSuit,
+    setSkinNameForSuit,
+    cards,
+    setCards,
 
     skinString,
   };

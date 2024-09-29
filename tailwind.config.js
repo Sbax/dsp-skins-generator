@@ -17,7 +17,32 @@ const safelist = Object.keys(colors).flatMap((color) => [
 
 module.exports = {
   daisyui: {
-    themes: ["garden"],
+    themes: [
+      {
+        garden: {
+          primary: "#6d0b74",
+          "primary-focus": "#410745",
+          "primary-content": "#ffffff",
+          secondary: "#007ebd",
+          "secondary-focus": "#005c8a",
+          "secondary-content": "#ffffff",
+          accent: "#f8860d",
+          "accent-focus": "#cb6c06",
+          "accent-content": "#ffffff",
+          neutral: "#5c5757",
+          "neutral-focus": "#272525",
+          "neutral-content": "#e9e7e7",
+          "base-100": "#e9e7e7",
+          "base-200": "#d1cccc",
+          "base-300": "#b9b1b1",
+          "base-content": "#100f0f",
+          info: "#1c92f2",
+          success: "#009485",
+          warning: "#ff9900",
+          error: "#ff5724",
+        },
+      },
+    ],
   },
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   safelist,
