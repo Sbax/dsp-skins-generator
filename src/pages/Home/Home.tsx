@@ -67,7 +67,7 @@ function Home() {
         Skins Generator
       </h1>
 
-      <section className="gap-8 grid grid-cols-2 max-w-screen-lg">
+      <section className="gap-8 grid grid-cols-1 md:grid-cols-2 max-w-screen-lg">
         <section className="space-y-4">
           <section className="space-y-2">
             <h3 className="font-bold text-xl">Choose a name for your skin</h3>
